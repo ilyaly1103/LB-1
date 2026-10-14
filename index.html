@@ -1,43 +1,56 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./styles.css" />
-    <title>Розрахунок площин</title>
-  </head>
-  <body>
-    <main id="main-container">
-      <h1>Калькулятор фігур</h1>
 
-      <section class="form-group">
-        <label for="shape-select">Оберіть фігуру:</label>
-        <select id="shape-select" name="shape">
-          <option value="" disabled selected>-- Оберіть --</option>
-          <option value="rectangle">Прямокутник</option>
-          <option value="circle">Коло</option>
-          <option value="triangle">Трикутник</option>
-        </select>
-      </section>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./styles.css" />
+  <title>Розрахунок площин</title>
+</head>
 
-      <div id="inputs" class="form-group">
+<body>
+  <main id="main-container">
+    <h1>Калькулятор фігур</h1>
 
-      </div>
+    <section class="form-group">
+      <label for="shape-select">Оберіть фігуру:</label>
+      <select id="shape-select" name="shape">
+        <option value="" disabled selected>-- Оберіть --</option>
+        <option value="rectangle">Прямокутник</option>
+        <option value="circle">Коло</option>
+        <option value="triangle">Трикутник</option>
+      </select>
+    </section>
 
-      <button id="calculate-btn" data-action="calculate">Обчислити</button>
+    <div id="inputs" class="form-group">
 
-      <div id="result">
+    </div>
 
-      </div>
+    <button id="calculate-btn" data-action="calculate">Обчислити</button>
 
-      <section class="history-section">
-        <h3>Історія обчислень</h3>
-        <button id="clear-history-button" data-action="clear">Очистити історію</button>
-        <ul id="history-list">
+    <div id="result">
 
-        </ul>
-      </section>
-    </main>
-    <script src="./script.js"></script>
-  </body>
+    </div>
+
+    <section>
+      <label>Фільтр історії: </label>
+      <select id="history-filter">
+        <option value="all" selected>Всі фігури</option>
+        <option value="Прямокутник">Прямокутник</option>
+        <option value="Коло">Коло</option>
+        <option value="Трикутник">Трикутник</option>
+      </select>
+    </section>
+
+    <section class="history-section">
+      <h3>Історія обчислень</h3>
+      <button id="clear-history-button" data-action="clear">Очистити історію</button>
+      <ul id="history-list">
+
+      </ul>
+    </section>
+  </main>
+  <script src="./script.js"></script>
+</body>
+
 </html>
