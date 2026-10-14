@@ -28,9 +28,9 @@ class Shape {
 
     return Math.sqrt(
       semiPerimiter *
-        (semiPerimiter - this.sideA) *
-        (semiPerimiter - this.sideB) *
-        (semiPerimiter - this.sideC),
+      (semiPerimiter - this.sideA) *
+      (semiPerimiter - this.sideB) *
+      (semiPerimiter - this.sideC),
     );
   }
 }
@@ -80,9 +80,12 @@ mainContainer.addEventListener("click", (event) => {
     const regex = /^\d+(\.\d+)?$/;
 
     for (let input of inputsArray) {
+      input.classList.remove("active");
+
       if (!regex.test(input.value)) {
-        alert("Одна з форм заповнена неправильно або не заповнена!");
-        return; 
+        input.classList.add("active");
+
+        return;
       }
     }
 
@@ -139,7 +142,7 @@ mainContainer.addEventListener("click", (event) => {
       const resultText = `Фігура: Трикутник, Площа: ${result}`;
       historyManager.save(resultText);
     }
-    
+
   } else if (event.target.id === "clear-history-button") {
     historyManager.clear();
   }
