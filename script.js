@@ -6,7 +6,7 @@ const resultContainer = document.getElementById("result");
 const selectShape = document.getElementById("shape-select");
 
 class Shape {
-  Rectagle(width, height) {
+  Rectangle(width, height) {
     this.width = width;
     this.height = height;
 
@@ -53,16 +53,83 @@ class CalculationHistory {
     this.render();
   }
 
-  render() {
+  render(filterValue = 'all') {
     this.listElement.innerHTML = "";
     const history = this.getHistory();
 
-    history.forEach((item) => {
-      const li = document.createElement("li");
-      li.textContent = item;
+    history.forEach((item, index) => {
+
+      if (filterValue !== 'all' && !item.includes(filterValue)) {
+        return;
+      }
+      const li = document.createElement('li');
+      li.textContent = item + " ";
+
+      const editBtn = document.createElement('button');
+      editBtn.textContent = '✏️ Редагувати';
+      editBtn.style.marginLeft = '10px';
+      editBtn.onclick = () => this.editItem(index);
+
+      li.appendChild(editBtn);
+
       this.listElement.appendChild(li);
     });
   }
+
+  editItem(index) {
+        const history = this.getHistory();
+        const currentText = history[index];
+        const calculator = new Shape(); 
+        let newRecord = "";
+
+        if (currentText.includes("Прямокутник")) {
+            const input = prompt("Введіть нову ширину та висоту через пробіл (наприклад: 5 10):");
+            if (!input) return; 
+            
+            const [w, h] = input.split(" ").map(Number);
+            if (w > 0 && h > 0) {
+                const area = calculator.Rectangle(w, h);
+                newRecord = `Фігура: Прямокутник, Площа: ${area}`;
+            } else {
+                alert("Некоректні дані!"); return;
+            }
+        } 
+        else if (currentText.includes("Коло")) {
+            const input = prompt("Введіть новий радіус:");
+            if (!input) return;
+            
+            const r = Number(input);
+            if (r > 0) {
+                const area = calculator.Circle(r);
+                newRecord = `Фігура: Коло, Площа: ${area}`;
+            } else {
+                alert("Некоректні дані!"); return;
+            }
+        } 
+        else if (currentText.includes("Трикутник")) {
+            const input = prompt("Введіть три сторони через пробіл (наприклад: 3 4 5):");
+            if (!input) return;
+            
+            const [a, b, c] = input.split(" ").map(Number);
+            if (a > 0 && b > 0 && c > 0) {
+                const area = calculator.Triangle(a, b, c);
+                newRecord = `Фігура: Трикутник, Площа: ${area}`;
+                console.log(a,b,c)
+            } else {
+                alert("Некоректні дані!"); return;
+            }
+        }
+
+        if (newRecord) {
+            history[index] = newRecord;
+            localStorage.setItem(this.storageKey, JSON.stringify(history));
+            
+            const currentFilter = document.getElementById('history-filter') 
+                ? document.getElementById('history-filter').value 
+                : 'all';
+            this.render(currentFilter);
+        }
+    }
 
   clear() {
     localStorage.removeItem(this.storageKey);
@@ -207,4 +274,8 @@ selectShape.addEventListener("change", (event) => {
 
       break;
   }
+});
+
+document.getElementById('history-filter').addEventListener('change', (event) => {
+  historyManager.render(event.target.value);
 });
